@@ -12,10 +12,13 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks {
@@ -43,6 +46,8 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+        
+
     }
 
     @Override
@@ -73,6 +78,15 @@ public class MainActivity extends Activity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
+        
+        ImageButton imgBtn = (ImageButton)findViewById(R.id.start_btn);
+        imgBtn.setOnClickListener(new OnClickListener() 
+        {
+			public void onClick(View v) 
+			{
+				Toast.makeText(MainActivity.this, "Distance calculation started", Toast.LENGTH_SHORT).show();
+			}
+		});
     }
 
 
