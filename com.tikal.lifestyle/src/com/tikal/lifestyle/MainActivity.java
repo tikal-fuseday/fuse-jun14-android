@@ -69,6 +69,15 @@ public class MainActivity extends Activity
             case 3:
                 mTitle = getString(R.string.title_section3);
                 break;
+            case 4:
+            	mTitle = getString(R.string.title_section4);
+        }
+        
+        if (number == 4)
+        {
+        	GeoMapper mapper = new GeoMapper();
+        	String address = mapper.getAddress(this.getApplicationContext(), 32.106535, 34.834499);
+        	Toast.makeText(this.getApplicationContext(), address, Toast.LENGTH_LONG).show();
         }
     }
 
