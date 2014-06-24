@@ -25,20 +25,31 @@ public class TwitterClient {
 		try {
 			parent.put("created_at", date);
 			parent.put("text", message);
+			parent.put("lat", lat);
+			parent.put("lon", lon);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 			
 		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-		Send(parent.toString());
+		final String json = parent.toString();
+		new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				Send(json);				
+			}
+			
+		}).start();
+		
 	
 	}
 	
 	private void Send(String text)
 	{
 		try {
-            URL url = new URL("http://localhost/TwitterService");
+            URL url = new URL("http://192.168.1.80:8080/save/twit");
             URLConnection connection = url.openConnection();
             connection.setDoOutput(true);
             connection.setRequestProperty("Content-Type", "application/json");

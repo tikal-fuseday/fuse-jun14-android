@@ -8,7 +8,6 @@ import android.location.Location;
 public class GpsTracker{
 	
 	private ArrayList<Location> locationData;
-	private int lastLocationQueryIndex = -1;
 	
 	public GpsTracker()
 	{
@@ -34,8 +33,6 @@ public class GpsTracker{
 	
 	public List<Location> getLastLocations()
 	{
-		List<Location> result = locationData.subList(lastLocationQueryIndex + 1, locationData.size());
-		lastLocationQueryIndex = locationData.size() - 1;
-		return result;
+		return locationData;
 	}
 }
