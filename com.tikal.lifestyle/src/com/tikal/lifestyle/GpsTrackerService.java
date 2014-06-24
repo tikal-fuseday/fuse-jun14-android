@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.IBinder;
 import android.os.Binder;
-import android.widget.Toast;
 
 public class GpsTrackerService extends Service{
 	private LocationManager gpsLocationManager;
@@ -47,7 +46,6 @@ public class GpsTrackerService extends Service{
 
 	@Override
 	public IBinder onBind(Intent arg0) {
-		// TODO Auto-generated method stub
 		return gpsTrackingBinder;
 	}
 	
@@ -61,5 +59,4 @@ public class GpsTrackerService extends Service{
 	public boolean isTracking() {
 		return _isTracking;
 	}
-
 }

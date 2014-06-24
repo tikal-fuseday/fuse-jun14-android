@@ -2,15 +2,10 @@ package com.tikal.lifestyle;
 
 import java.util.ArrayList;
 
-import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
-//import android.location.GpsStatus;
-import android.os.Bundle;
 
 public class GpsTracker{
 	
-	private Context executingContext;
 	private ArrayList<Location> locationData;
 	
 	public GpsTracker()
