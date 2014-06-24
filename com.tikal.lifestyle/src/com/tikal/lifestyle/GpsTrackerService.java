@@ -14,9 +14,12 @@ public class GpsTrackerService extends Service{
 	private IBinder gpsTrackingBinder = new GpsTrackingBinder();
 	private GpsTrackerListener gpsTrackerListener;
 	private GpsTracker gpsTracker;
+
+	private boolean _isTracking;
 	
 	public void StartGpsManager()
 	{
+		_isTracking = true;
 		if(gpsLocationManager == null)
 		{
 			gpsLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);	
@@ -37,6 +40,7 @@ public class GpsTrackerService extends Service{
 	
 	public void StopGpsManager()
 	{
+		_isTracking = false;
 		gpsLocationManager.removeUpdates(gpsTrackerListener);
 	}
 
@@ -52,6 +56,10 @@ public class GpsTrackerService extends Service{
 		{
 			return GpsTrackerService.this;
 		}
+	}
+
+	public boolean isTracking() {
+		return _isTracking;
 	}
 
 }

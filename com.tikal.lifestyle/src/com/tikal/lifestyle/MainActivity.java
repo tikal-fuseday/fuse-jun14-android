@@ -213,9 +213,25 @@ public class MainActivity extends Activity
     			{    				   				
     				
     				MainActivity activity = (MainActivity)getActivity();
-    				activity.gpsTrackerService.StartGpsManager();
+    				GpsTrackerService trackerService = activity.gpsTrackerService;
     				
-    				Toast.makeText(v.getContext(), "Distance calculation started", Toast.LENGTH_SHORT).show();
+    				if(trackerService.isTracking())
+    				{
+    					trackerService.StopGpsManager();
+    					//
+    					
+        				v.setBackgroundResource(R.drawable.start);
+        				Toast.makeText(v.getContext(), "Distance calculation stopped", Toast.LENGTH_SHORT).show();
+
+    				} else {
+        				
+        				trackerService.StartGpsManager();
+        				
+        				v.setBackgroundResource(R.drawable.stop);
+        				Toast.makeText(v.getContext(), "Distance calculation started", Toast.LENGTH_SHORT).show();
+    					
+    				}
+    				
     			}
     		});
 
