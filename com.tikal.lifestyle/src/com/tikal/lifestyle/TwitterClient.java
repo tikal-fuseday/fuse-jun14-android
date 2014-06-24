@@ -11,22 +11,28 @@ import java.util.Date;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+import android.widget.Toast;
+
 public class TwitterClient {
 
-	public void SendLocation(float lat, float lon, float ele, String text)
+	public void SendLocation(double lat, double lon, float ele, String text, Context context)
 	{
 		JSONObject parent = new JSONObject();
 		SimpleDateFormat format = new SimpleDateFormat();
 		String date = format.format(new Date());
+		String message = text + " at: " + lat + ":" + lon + ";" + ele;
 		try {
 			parent.put("created_at", date);
-			parent.put("text", text + " at: " + lat + ":" + lon + ";" + ele);
+			parent.put("text", message);
 		} catch (JSONException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+			
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
 		Send(parent.toString());
+	
 	}
 	
 	private void Send(String text)

@@ -1,5 +1,7 @@
 package com.tikal.lifestyle;
 
+import java.util.List;
+
 import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
@@ -8,6 +10,7 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -172,6 +175,21 @@ public class MainActivity extends Activity
     	stopService(serviceIntent);
     }
 
+    public void CalcRouteAndSend()
+    {
+    	GpsTracker tracker = gpsTrackerService.getGpsTracker();
+    	List<Location> locations = tracker.getLastLocations();
+    	
+    	if (locations.size() == 0)
+    		return;
+        Location lastLocation = locations.get(locations.size() - 1);
+		float distance = locations.get(0).distanceTo(lastLocation);
+        
+		GeoMapper mapper = new GeoMapper();
+		String location = mapper.getAddress(this.getApplicationContext(), lastLocation.getLatitude(), lastLocation.getLongitude());
+        TwitterClient tc = new TwitterClient();
+        tc.SendLocation(locations.get(0).getLatitude(), locations.get(0).getLongitude(), 0, "Moved " + distance + " meters to " + location, this);
+    }
     /**
      * A placeholder fragment containing a simple view.
      */
@@ -223,6 +241,7 @@ public class MainActivity extends Activity
         				v.setBackgroundResource(R.drawable.start);
         				Toast.makeText(v.getContext(), "Distance calculation stopped", Toast.LENGTH_SHORT).show();
 
+        				activity.CalcRouteAndSend();
     				} else {
         				
         				trackerService.StartGpsManager();
@@ -244,6 +263,8 @@ public class MainActivity extends Activity
             ((MainActivity) activity).onSectionAttached(
                     getArguments().getInt(ARG_SECTION_NUMBER));
         }
+        
+       
     }
 
 }

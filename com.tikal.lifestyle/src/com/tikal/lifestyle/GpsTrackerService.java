@@ -24,14 +24,11 @@ public class GpsTrackerService extends Service{
 			gpsLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);	
 		}
 		
-		if(gpsTracker == null)
-		{
-			gpsTracker = new GpsTracker();
-		}
-		
+	    gpsTracker = new GpsTracker();
+				
 		if(gpsTrackerListener == null)
 		{
-			gpsTrackerListener = new GpsTrackerListener(gpsTracker);
+			gpsTrackerListener = new GpsTrackerListener(getGpsTracker());
 		}
 		
 		gpsLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, gpsTrackerListener);		
@@ -58,5 +55,8 @@ public class GpsTrackerService extends Service{
 
 	public boolean isTracking() {
 		return _isTracking;
+	}
+	public GpsTracker getGpsTracker() {
+		return gpsTracker;
 	}
 }
