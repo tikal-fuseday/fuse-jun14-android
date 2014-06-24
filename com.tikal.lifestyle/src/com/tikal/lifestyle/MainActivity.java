@@ -47,7 +47,6 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         
-
     }
 
     @Override
@@ -78,15 +77,6 @@ public class MainActivity extends Activity
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_STANDARD);
         actionBar.setDisplayShowTitleEnabled(true);
         actionBar.setTitle(mTitle);
-        
-        ImageButton imgBtn = (ImageButton)findViewById(R.id.start_btn);
-        imgBtn.setOnClickListener(new OnClickListener() 
-        {
-			public void onClick(View v) 
-			{
-				Toast.makeText(MainActivity.this, "Distance calculation started", Toast.LENGTH_SHORT).show();
-			}
-		});
     }
 
 
@@ -146,6 +136,18 @@ public class MainActivity extends Activity
             View rootView = inflater.inflate(R.layout.fragment_main, container, false);
             TextView textView = (TextView) rootView.findViewById(R.id.section_label);
             textView.setText(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            
+
+            
+            ImageButton imgBtn = (ImageButton)rootView.findViewById(R.id.start_btn);
+            imgBtn.setOnClickListener(new OnClickListener() 
+            {
+    			public void onClick(View v) 
+    			{
+    				Toast.makeText(v.getContext(), "Distance calculation started", Toast.LENGTH_SHORT).show();
+    			}
+    		});
+
             return rootView;
         }
 
