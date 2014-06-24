@@ -210,7 +210,11 @@ public class MainActivity extends Activity
             imgBtn.setOnClickListener(new OnClickListener() 
             {
     			public void onClick(View v) 
-    			{
+    			{    				   				
+    				
+    				MainActivity activity = (MainActivity)getActivity();
+    				activity.gpsTrackerService.StartGpsManager();
+    				
     				Toast.makeText(v.getContext(), "Distance calculation started", Toast.LENGTH_SHORT).show();
     			}
     		});

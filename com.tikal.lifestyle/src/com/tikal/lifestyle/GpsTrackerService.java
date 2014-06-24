@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.LocationManager;
 import android.os.IBinder;
 import android.os.Binder;
+import android.widget.Toast;
 
 public class GpsTrackerService extends Service{
 	private LocationManager gpsLocationManager;
@@ -31,7 +32,7 @@ public class GpsTrackerService extends Service{
 			gpsTrackerListener = new GpsTrackerListener(gpsTracker);
 		}
 		
-		gpsLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, gpsTrackerListener);
+		gpsLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, gpsTrackerListener);		
 	}
 	
 	public void StopGpsManager()
