@@ -45,4 +45,12 @@ public class GpsTrackerService extends Service{
 		// TODO Auto-generated method stub
 		return gpsTrackingBinder;
 	}
+	
+	public class GpsTrackingBinder extends Binder {
+		public GpsTrackerService getService()
+		{
+			return GpsTrackerService.this;
+		}
+	}
+
 }

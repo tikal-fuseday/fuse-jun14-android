@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.app.ActionBar;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -32,6 +36,10 @@ public class MainActivity extends Activity
      * Used to store the last screen title. For use in {@link #restoreActionBar()}.
      */
     private CharSequence mTitle;
+    
+    
+    private GpsTrackerService gpsTrackerService;
+    private static Intent serviceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,9 +55,34 @@ public class MainActivity extends Activity
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
         
+        StartAndBindService();        
+    }
+    
+    @Override
+    protected void onStart() {
+        super.onStart();
+        StartAndBindService();
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        StartAndBindService();
+    }
+    
+    @Override
+	protected void onDestroy() {
+		StopAndUnbindService();
+		super.onDestroy();
+	}
+
+	@Override
+	protected void onPause() {
+		StopAndUnbindService();
+		super.onPause();
+	}
+
+	@Override
     public void onNavigationDrawerItemSelected(int position) {
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
@@ -112,6 +145,31 @@ public class MainActivity extends Activity
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+    
+    private final ServiceConnection gpsServiceConnection = new ServiceConnection() {
+
+        public void onServiceDisconnected(ComponentName name) {
+            gpsTrackerService = null;
+        }
+
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            gpsTrackerService = ((GpsTrackerService.GpsTrackingBinder) service).getService();
+            //GpsTrackerService.SetServiceClient(MainActivity.this);
+        }
+    };
+    
+    private void StartAndBindService()
+    {
+    	serviceIntent = new Intent(this, GpsTrackerService.class);
+        startService(serviceIntent);
+        bindService(serviceIntent, gpsServiceConnection, Context.BIND_AUTO_CREATE);
+    }
+    
+    private void StopAndUnbindService()
+    {
+    	unbindService(gpsServiceConnection);
+    	stopService(serviceIntent);
     }
 
     /**
